@@ -16,6 +16,7 @@ class Views::ComponentsShowcase < Views::Base
           render_buttons
           render_badges
           render_alerts
+          render_interactive_components
           render_forms
           render_navigation
           render_data_display
@@ -82,6 +83,106 @@ class Views::ComponentsShowcase < Views::Base
           { variant: :info, title: "Info", message: "Additional information for you" }
         ].each do |config|
           render Components::WindUI::Alert.new(**config)
+        end
+      end
+    end
+  end
+
+  def render_interactive_components
+    render_section("Interactive Components (Stimulus-Powered)", "interactive") do
+      div(class: "space-y-8") do
+        # Dropdowns
+        div do
+          h3(class: "text-lg font-semibold text-gray-900 mb-4") { "Dropdown" }
+          div(class: "flex gap-4") do
+            render Components::WindUI::Dropdown.new(
+              trigger: "Options",
+              items: [
+                { label: "Edit", href: "#" },
+                { label: "Duplicate", href: "#" },
+                { label: "Archive", href: "#" },
+                { label: "Delete", href: "#", danger: true }
+              ]
+            )
+            
+            render Components::WindUI::Dropdown.new(
+              trigger: "Actions",
+              items: [
+                { label: "View Details", href: "#" },
+                { label: "Share", href: "#" },
+                { label: "Download", href: "#" }
+              ]
+            )
+          end
+        end
+
+        # Modal
+        div do
+          h3(class: "text-lg font-semibold text-gray-900 mb-4") { "Modal" }
+          div do
+            button(
+              type: "button",
+              class: "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700",
+              data: { action: "click->modal#open" }
+            ) do
+              plain("Open Modal")
+            end
+
+            render Components::WindUI::Modal.new(title: "Example Modal", size: :md) do
+              div(class: "space-y-4") do
+                p(class: "text-gray-700") do
+                  plain("This is a modal dialog with Stimulus controller integration.")
+                end
+                p(class: "text-gray-700") do
+                  plain("Features:")
+                end
+                ul(class: "list-disc list-inside text-gray-700 space-y-1") do
+                  li { "Click outside to close" }
+                  li { "Press Escape to close" }
+                  li { "Body scroll is locked when open" }
+                  li { "Focus is trapped inside modal" }
+                end
+                div(class: "flex justify-end gap-3 mt-6") do
+                  button(
+                    type: "button",
+                    class: "px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50",
+                    data: { action: "click->modal#close" }
+                  ) do
+                    plain("Cancel")
+                  end
+                  button(
+                    type: "button",
+                    class: "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700",
+                    data: { action: "click->modal#close" }
+                  ) do
+                    plain("Confirm")
+                  end
+                end
+              end
+            end
+          end
+        end
+
+        # Tooltip
+        div do
+          h3(class: "text-lg font-semibold text-gray-900 mb-4") { "Tooltip" }
+          div(class: "flex gap-6") do
+            render Components::WindUI::Tooltip.new(text: "Tooltip on top", position: :top) do
+              button(class: "px-4 py-2 bg-gray-200 rounded-lg") { "Top" }
+            end
+
+            render Components::WindUI::Tooltip.new(text: "Tooltip on bottom", position: :bottom) do
+              button(class: "px-4 py-2 bg-gray-200 rounded-lg") { "Bottom" }
+            end
+
+            render Components::WindUI::Tooltip.new(text: "Tooltip on left", position: :left) do
+              button(class: "px-4 py-2 bg-gray-200 rounded-lg") { "Left" }
+            end
+
+            render Components::WindUI::Tooltip.new(text: "Tooltip on right", position: :right) do
+              button(class: "px-4 py-2 bg-gray-200 rounded-lg") { "Right" }
+            end
+          end
         end
       end
     end

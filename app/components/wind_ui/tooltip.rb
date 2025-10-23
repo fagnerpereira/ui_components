@@ -24,16 +24,30 @@ class Components::WindUI::Tooltip < Components::WindUI::Base
 
   def view_template
     component_class = [
-      "relative inline-block group",
+      "relative inline-block",
       class_name
     ].filter_map { |c| c if c.present? }.join(" ")
 
-    div(class: component_class, **@attrs) do
+    div(
+      class: component_class,
+      data: {
+        controller: "tooltip",
+        tooltip_delay_value: 200,
+        tooltip_hidden_class: "invisible opacity-0",
+        tooltip_visible_class: "visible opacity-100",
+        action: "mouseenter->tooltip#show mouseleave->tooltip#hide focus->tooltip#show blur->tooltip#hide"
+      },
+      **@attrs
+    ) do
       # Trigger element
       @block&.call
 
       # Tooltip
-      div(class: "invisible group-hover:visible absolute #{POSITIONS[position.to_sym] || POSITIONS[:top]} z-10 bg-gray-900 text-white text-sm px-3 py-2 rounded whitespace-nowrap") do
+      div(
+        class: "invisible opacity-0 absolute #{POSITIONS[position.to_sym] || POSITIONS[:top]} z-10 bg-gray-900 text-white text-sm px-3 py-2 rounded whitespace-nowrap transition-opacity duration-200 pointer-events-none",
+        data: { tooltip_target: "content" },
+        role: "tooltip"
+      ) do
         plain(text)
       end
     end

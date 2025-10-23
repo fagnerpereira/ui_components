@@ -10,6 +10,9 @@ module ActiveSupport
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
 
-    # Add more helper methods to be used by all tests here...
+    # Helper method to render Phlex components
+    def render(component)
+      component.call
+    end
   end
 end

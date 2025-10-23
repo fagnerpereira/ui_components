@@ -1,0 +1,26 @@
+{
+  // Associate bin/* files with shellscript language
+  "files.associations": {
+    "bin/*": "shellscript"
+  },
+
+  // Exclude bin directory from Ruby LSP analysis
+  "rubyLsp.rubyExecutablePath": "",
+  "rubyLsp.enabledFeatures": {
+    "diagnostics": true
+  },
+  "rubyLsp.featuresConfiguration": {
+    "diagnostics": {
+      "enabledDiagnostics": []
+    }
+  },
+
+  // Exclude bin/* from Ruby LSP file watching
+  "files.exclude": {},
+  "search.exclude": {},
+
+  // Tell VSCode to treat bin/ files as shell scripts by default
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  }
+}

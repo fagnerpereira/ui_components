@@ -11,5 +11,6 @@ Rails.application.routes.draw do
 
   # Components showcase
   get "components", to: "components_showcase#index", as: :components_showcase
+  get "components/interactive", to: "components_interactive_showcase#index", as: :components_interactive_showcase
   root "components_showcase#index"
 end

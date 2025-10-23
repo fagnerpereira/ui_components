@@ -51,7 +51,7 @@ group :development, :test do
   gem "brakeman", require: false
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
-  gem "rubocop-rails-omakase", require: false
+  # gem "rubocop-rails-omakase", require: false
 end
 
 group :development do
@@ -69,5 +69,8 @@ gem "phlex-rails", "~> 2.3"
 
 # Tailwind CSS for styling
 gem "tailwindcss-rails", "~> 4.0.0"
+
+# Syntax highlighting for code blocks
+gem "rouge", "~> 4.1"
 
 gem "standard", "~> 1.35"

@@ -26,20 +26,29 @@ class Components::WindUI::Toggle < Components::WindUI::Base
   def view_template
     config = TOGGLE_SIZES[@size.to_sym] || TOGGLE_SIZES[:md]
 
-    div(class: "flex items-center") do
-      # Hidden checkbox input
+    div(
+      class: "flex items-center",
+      data: {
+        controller: "toggle",
+        toggle_checked_value: @checked,
+        toggle_on_class: "bg-blue-600",
+        toggle_off_class: "bg-gray-300"
+      }
+    ) do
+      # Hidden checkbox input for form submission
       input(
         type: "checkbox",
         class: "sr-only",
         checked: @checked,
         disabled: @disabled,
+        data: { toggle_target: "input" },
         **@attrs
       )
 
       # Toggle background
       button_class = [
         config[:bg],
-        "relative inline-block rounded-full transition-colors",
+        "relative inline-block rounded-full transition-colors duration-200",
         "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
         "disabled:opacity-50 disabled:cursor-not-allowed",
         @checked ? "bg-blue-600" : "bg-gray-300",
@@ -51,16 +60,21 @@ class Components::WindUI::Toggle < Components::WindUI::Base
         class: button_class,
         disabled: @disabled,
         role: "switch",
-        "aria-checked": @checked
+        data: {
+          toggle_target: "button",
+          action: "click->toggle#toggle keydown->toggle#handleKeydown",
+          translate_class: config[:translate]
+        },
+        aria: { checked: @checked }
       ) do
         # Toggle dot
         dot_class = [
           config[:dot],
-          "absolute top-1/2 -translate-y-1/2 left-1 bg-white rounded-full transition-transform",
+          "absolute top-1/2 -translate-y-1/2 left-1 bg-white rounded-full transition-transform duration-200",
           @checked ? config[:translate] : ""
         ].filter_map { |c| c if c.present? }.join(" ")
 
-        div(class: dot_class)
+        div(class: dot_class, data: { toggle_target: "dot" })
       end
 
       if @label_text.present?

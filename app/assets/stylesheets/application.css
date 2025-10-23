@@ -7,6 +7,7 @@
  * depending on specificity.
  *
  * Consider organizing styles into separate files for maintainability.
+ *
+ * Note: Tailwind CSS is compiled separately from app/assets/tailwind/application.css
+ * via the tailwindcss-ruby gem and served as the compiled CSS in app/assets/builds/tailwind.css
  */
-
-@import "tailwindcss";
