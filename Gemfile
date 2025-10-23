@@ -70,4 +70,4 @@ gem "phlex-rails", "~> 2.3"
 # Tailwind CSS for styling
 gem "tailwindcss-rails", "~> 4.3.0"
 
-gem "standard", "~> 1.35"
+gem "standard", "~> 1.51"
